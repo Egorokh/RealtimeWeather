@@ -1,6 +1,7 @@
 package com.example.realtimeweather.api
 
 data class Location (
+    val name: String,
     val region: String,
     val country: String,
     val lat: String,
