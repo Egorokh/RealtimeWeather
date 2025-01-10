@@ -31,14 +31,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.realtimeweather.api.NetworkResponse
 import com.example.realtimeweather.api.WeatherModel
 
 
-@Composable
-fun WeatherPage(viewModel: WeatherViewModel) {
+@Preview(apiLevel = 34)
+@Composable fun WeatherPage(viewModel: WeatherViewModel) {
 
     var city by remember {
         mutableStateOf("")
@@ -48,7 +49,7 @@ fun WeatherPage(viewModel: WeatherViewModel) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier.fillMaxWidth().padding(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
@@ -57,20 +58,20 @@ fun WeatherPage(viewModel: WeatherViewModel) {
 
         ) {
             OutlinedTextField(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(2f),
                 value = city ,
                 onValueChange ={
                     city = it
                 },
                 label = {
-                    Text(text = "Search for any location")
+                    Text(text = "Поиск")
                 }
             )
             IconButton(onClick = {
                 viewModel.getData(city)
             }) {
                 Icon(imageVector = Icons.Default.Search,
-                    contentDescription = "Search for any location")
+                    contentDescription = "Поиск")
             }
         }
         when(val result = weatherResult.value){
@@ -79,6 +80,7 @@ fun WeatherPage(viewModel: WeatherViewModel) {
             }
             NetworkResponse.Loading -> {
                 CircularProgressIndicator()
+
             }
             is NetworkResponse.Success -> {
                 WeatherDetails(data = result.data)
@@ -90,8 +92,8 @@ fun WeatherPage(viewModel: WeatherViewModel) {
     }
     
 }
-@Composable
-fun WeatherDetails(data: WeatherModel){
+@Preview
+@Composable fun WeatherDetails(data: WeatherModel){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -141,22 +143,22 @@ fun WeatherDetails(data: WeatherModel){
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    WeatherKeyVal("Humidity",data.current.humidity)
-                    WeatherKeyVal("Wind Speed",data.current.wind_kph+" km/h")
+                    WeatherKeyVal("Влажность",data.current.humidity)
+                    WeatherKeyVal("Скорость ветра",data.current.wind_kph+" km/h")
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    WeatherKeyVal("UV",data.current.uv)
-                    WeatherKeyVal("Participation",data.current.precip_mm+" mm")
+                    WeatherKeyVal("УФ-излучение",data.current.uv)
+                    WeatherKeyVal("Количество осадков",data.current.precip_mm+" mm")
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    WeatherKeyVal("Local Time",data.location.localtime.split(" ")[1])
-                    WeatherKeyVal("Local Date",data.location.localtime.split(" ")[0])
+                    WeatherKeyVal("Местное время",data.location.localtime.split(" ")[1])
+                    WeatherKeyVal("Местная дата",data.location.localtime.split(" ")[0])
                 }
             }
         }
@@ -164,8 +166,8 @@ fun WeatherDetails(data: WeatherModel){
 
 }
 
-@Composable
-fun WeatherKeyVal(key : String, value : String) {
+@Preview
+@Composable fun WeatherKeyVal(key : String, value : String) {
     Column(
         modifier = Modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally

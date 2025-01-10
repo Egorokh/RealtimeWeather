@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.example.realtimeweather"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -59,7 +59,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     val retrofitVersion = "2.11.0"
-    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.compose.v302)
+    implementation(libs.coil.network.okhttp)
 }
